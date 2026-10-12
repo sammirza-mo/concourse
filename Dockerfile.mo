@@ -14,8 +14,8 @@
 #
 # Upstream's own Dockerfile is dev-only (it volume-mounts source); do not use it here.
 
-ARG CONCOURSE_VERSION=8.3.0
-ARG GO_VERSION=1.26
+ARG CONCOURSE_VERSION=8.3.1
+ARG GO_VERSION=1.27
 ARG NODE_VERSION=22
 
 # 2026-09-24: amd64 regardless of the build host because the elm npm package ships no
@@ -54,9 +54,9 @@ ARG TARGETARCH
 #
 # 2026-09-22: Version is injected via ldflags because versions.go defaults it to
 # "0.0.0-dev". It is set to the plain upstream version (no fork suffix) so that semver
-# parsing, fly's version check and the UI all behave exactly as on stock 8.3.0 -- fork
+# parsing, fly's version check and the UI all behave exactly as on the stock release -- fork
 # provenance is carried by the image tag instead. WorkerVersion is a source constant and
-# is deliberately NOT touched, which is what keeps the existing 8.3.0 workers compatible.
+# is deliberately NOT touched, which is what keeps stock workers of the same WorkerVersion compatible.
 RUN CGO_ENABLED=0 GOOS=${TARGETOS} GOARCH=${TARGETARCH} \
       go build -trimpath \
         -ldflags "-X github.com/concourse/concourse.Version=${CONCOURSE_VERSION}" \
